@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    direction: ltr;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased text-left;
+    margin: 0;
+    direction: ltr;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-bold tracking-tight;
+  }
+
+  /* Running copy across case-study pages uses Inter */
+  .project-typography p,
+  .project-typography li,
+  .project-typography td,
+  .project-typography th {
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  @media (min-width: 768px) {
+    .project-typography p,
+    .project-typography li,
+    .project-typography td,
+    .project-typography th {
+      font-size: 1.06rem;
+    }
+  }
+
+  /* Normalize heading rhythm and size across all project content areas */
+  .project-typography h2,
+  .project-typography h3,
+  .project-typography h4 {
+    font-family: Bricolage Grotesque, Inter, system-ui, sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .project-typography h2,
+    .project-typography h3,
+    .project-typography h4 {
+      font-size: 1.75rem;
+    }
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  .editorial-main {
+    @apply max-w-editorial mx-auto px-6 w-full text-left;
+  }
+
+  .editorial-block {
+    @apply w-full;
+  }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
