@@ -123,7 +123,7 @@ export default function PortfolioHero({ className }: PortfolioHeroProps) {
   return (
     <section
       className={cn(
-        'relative h-dvh overflow-hidden bg-background text-foreground',
+        'relative bg-background text-foreground md:h-dvh md:overflow-hidden',
         className
       )}
     >
@@ -134,7 +134,7 @@ export default function PortfolioHero({ className }: PortfolioHeroProps) {
       />
 
       <motion.div
-        className="relative z-20 mx-auto flex h-full max-w-6xl flex-col items-center justify-center gap-8 md:gap-10 px-4 pt-20 pb-8 md:px-8 md:pt-24 md:pb-10"
+        className="relative z-20 mx-auto flex md:h-full max-w-6xl flex-col items-center justify-center gap-8 md:gap-10 px-4 pt-20 pb-12 md:px-8 md:pt-24 md:pb-10"
         initial="hidden"
         animate="visible"
         variants={containerVariants}

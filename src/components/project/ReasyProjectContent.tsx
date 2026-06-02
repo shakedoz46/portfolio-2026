@@ -23,7 +23,7 @@ const SMART_MATCHING =
 const IMPACT_BODY =
   "For this project, I took charge of the product's direction and turned an idea into a working platform ready for the market. By solving the matching logic and building the business operations from scratch, I made sure Reasy brings real value to users and the business owner. I'm happy to say that Reasy is now almost ready and will be launching on app stores soon."
 
-const PHONE_CLASS = 'w-[min(26vw,120px)] sm:w-[160px] md:w-[200px] shrink-0'
+const PHONE_CLASS = 'w-full max-w-none'
 
 function FadeIn({
   children,
@@ -158,7 +158,7 @@ export default function ReasyProjectContent({ project }: ReasyProjectContentProp
       </FadeIn>
 
       <FadeIn className="py-12">
-        <div className="flex flex-nowrap justify-center items-end gap-3 sm:gap-6 md:gap-10">
+        <div className="grid grid-cols-3 gap-3 sm:gap-5 md:gap-8 w-full items-end">
           <IphoneMockup className={PHONE_CLASS}>
             <img
               src="/Reasy/מסך פתיחה iphone.png"

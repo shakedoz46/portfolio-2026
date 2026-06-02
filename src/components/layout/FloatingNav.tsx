@@ -68,7 +68,7 @@ export default function FloatingNav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.22 }}
-            className="md:hidden fixed inset-0 z-[200] bg-background/96 backdrop-blur-lg"
+            className="md:hidden fixed inset-0 z-[200] bg-background/70 backdrop-blur-lg"
           >
             {/* Close button */}
             <button
