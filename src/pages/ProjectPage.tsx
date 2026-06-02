@@ -1,6 +1,6 @@
 import { useParams, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { getProject, getNextProject } from '../data/projects'
+import { getProject } from '../data/projects'
 import ProjectHeader from '../components/project/ProjectHeader'
 import ProjectSection from '../components/project/ProjectSection'
 import ProjectImage from '../components/project/ProjectImage'
@@ -14,7 +14,6 @@ import OasisProjectContent from '../components/project/OasisProjectContent'
 export default function ProjectPage() {
   const { slug } = useParams<{ slug: string }>()
   const project = getProject(slug ?? '')
-  const next = getNextProject(slug ?? '')
 
   if (!project) return <Navigate to="/" replace />
 

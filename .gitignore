@@ -7,3 +7,4 @@ dist/
 
 # Large binary files (>100MB — host separately)
 assets/Michael/Screen video.mov
+.vercel
