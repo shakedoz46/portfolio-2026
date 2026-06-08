@@ -64,50 +64,57 @@ function HeroLogoCard({
   const isAnyHovered = hoveredSlug !== null
 
   return (
-    <motion.div
+    /* Outer wrapper: owns layout dimensions & z-index — NOT transformed */
+    <div
       className="relative shrink-0 w-[clamp(88px,17vw,200px)] aspect-square first:ml-0 -ml-[clamp(14px,3.2vw,36px)]"
-      initial={{ opacity: 0, y: 36, scale: 0.9 }}
-      animate={{
-        opacity: 1,
-        y: isHovered ? -11 : 0,
-        scale: isHovered ? 1.1 : 1,
-        rotate: isHovered ? 0 : pose.rotate,
-        zIndex: isHovered ? 50 : pose.z,
-      }}
-      transition={{ duration: 0.35, ease: easeOut, delay: index * 0.06 }}
-      onHoverStart={() => onHover(card.slug)}
-      onHoverEnd={() => onHover(null)}
+      style={{ zIndex: isHovered ? 50 : pose.z }}
     >
+      {/* Card: handles scale / lift / rotate — label is NOT inside here */}
+      <motion.div
+        className="absolute inset-0"
+        initial={{ opacity: 0, y: 36, scale: 0.9 }}
+        animate={{
+          opacity: 1,
+          y: isHovered ? -11 : 0,
+          scale: isHovered ? 1.1 : 1,
+          rotate: isHovered ? 0 : pose.rotate,
+        }}
+        transition={{ duration: 0.35, ease: easeOut, delay: index * 0.06 }}
+        onHoverStart={() => onHover(card.slug)}
+        onHoverEnd={() => onHover(null)}
+      >
+        <Link
+          to={`/project/${card.slug}`}
+          className={cn(
+            'block h-full w-full overflow-hidden rounded-2xl border border-foreground/10 bg-white shadow-[0_16px_40px_-10px_rgba(0,0,0,0.22)] transition-shadow',
+            isHovered && 'shadow-[0_24px_56px_-12px_rgba(0,0,0,0.28)]',
+            isAnyHovered && !isHovered && 'brightness-[0.97]'
+          )}
+          aria-label={`View ${card.label} case study`}
+        >
+          <img
+            src={card.src}
+            alt=""
+            className="h-full w-full object-cover"
+            loading={index >= 2 ? 'eager' : 'lazy'}
+          />
+        </Link>
+      </motion.div>
+
+      {/* Label: inset-x-0 + flex justify-center → always centered on the card regardless of text width */}
       <motion.span
-        className="pointer-events-none absolute -top-9 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap text-sm font-semibold text-foreground"
+        className="pointer-events-none absolute inset-x-0 -bottom-7 z-20 flex justify-center whitespace-nowrap text-sm font-semibold text-foreground"
         initial={false}
         animate={{
           opacity: isHovered ? 1 : 0,
-          y: isHovered ? 0 : 6,
+          y: isHovered ? 0 : -8,
         }}
-        transition={{ duration: 0.2 }}
+        transition={{ duration: 0.22 }}
         aria-hidden={!isHovered}
       >
         {card.label}
       </motion.span>
-
-      <Link
-        to={`/project/${card.slug}`}
-        className={cn(
-          'block h-full w-full overflow-hidden rounded-2xl border border-foreground/10 bg-white shadow-[0_16px_40px_-10px_rgba(0,0,0,0.22)] transition-shadow',
-          isHovered && 'shadow-[0_24px_56px_-12px_rgba(0,0,0,0.28)]',
-          isAnyHovered && !isHovered && 'brightness-[0.97]'
-        )}
-        aria-label={`View ${card.label} case study`}
-      >
-        <img
-          src={card.src}
-          alt=""
-          className="h-full w-full object-cover"
-          loading={index >= 2 ? 'eager' : 'lazy'}
-        />
-      </Link>
-    </motion.div>
+    </div>
   )
 }
 
@@ -134,7 +141,7 @@ export default function PortfolioHero({ className }: PortfolioHeroProps) {
       />
 
       <motion.div
-        className="relative z-20 mx-auto flex md:h-full max-w-6xl flex-col items-center justify-center gap-8 md:gap-10 px-4 pt-20 pb-12 md:px-8 md:pt-24 md:pb-10"
+        className="relative z-20 mx-auto flex md:h-full max-w-6xl flex-col items-center justify-center gap-10 md:gap-14 px-4 pt-20 pb-16 md:px-8 md:pt-24 md:pb-12"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
@@ -173,7 +180,7 @@ export default function PortfolioHero({ className }: PortfolioHeroProps) {
         </motion.div>
 
         <motion.div
-          className="flex w-full justify-center"
+          className="flex w-full justify-center pb-8"
           variants={descVariants}
         >
           {/* Desktop: horizontal fan */}
