@@ -13,7 +13,6 @@ const navItems = [
   { label: 'AdVary', to: '/project/ab-testing' },
   { label: 'Reasy', to: '/project/reasy' },
   { label: 'Smeets', to: '/project/smeets' },
-  { label: 'Oasis hotel', to: '/project/osis-hotel' },
 ] as const
 
 export default function FloatingNav() {
