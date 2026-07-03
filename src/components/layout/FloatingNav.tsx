@@ -19,11 +19,11 @@ const drawerVariants = {
   hidden: { x: '-100%' },
   visible: {
     x: 0,
-    transition: { duration: 0.38, ease: [0.22, 1, 0.36, 1] as number[] },
+    transition: { duration: 0.38, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   },
   exit: {
     x: '-100%',
-    transition: { duration: 0.28, ease: [0.55, 0, 0.22, 1] as number[] },
+    transition: { duration: 0.28, ease: [0.55, 0, 0.22, 1] as [number, number, number, number] },
   },
 }
 
@@ -34,7 +34,7 @@ const listVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, x: -14 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] as number[] } },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
 }
 
 function NavLink({ to, label }: { to: string; label: string }) {
