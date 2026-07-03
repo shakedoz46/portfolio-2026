@@ -2,13 +2,13 @@ import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import IpadMockup from './IpadMockup'
 
-const SLIDES: { src: string; label: string }[] = [
-  { src: '/Reasy/צור קשר.png', label: 'Contact' },
-  { src: '/Reasy/דשבורד כללי.png', label: 'Dashboard' },
-  { src: '/Reasy/התראות.png', label: 'Alerts' },
-  { src: '/Reasy/משתמשים.png', label: 'Users' },
-  { src: '/Reasy/פרופיל שוכר.png', label: 'Tenant profile' },
-  { src: '/Reasy/פרופיל משכיר.png', label: 'Landlord profile' },
+const SLIDES = [
+  { src: '/Reasy/English version/Dashboard 1.jpg', label: 'Dashboard' },
+  { src: '/Reasy/English version/Dashboard 2.jpg', label: 'Dashboard 2' },
+  { src: '/Reasy/English version/Users.jpg', label: 'Users' },
+  { src: '/Reasy/English version/Alerts.jpg', label: 'Alerts' },
+  { src: '/Reasy/English version/Properties.jpg', label: 'Properties' },
+  { src: '/Reasy/English version/Welcome.jpg', label: 'Welcome' },
 ]
 
 interface ReasyScreenCarouselProps {
@@ -35,12 +35,10 @@ export default function ReasyScreenCarousel({ accentColor }: ReasyScreenCarousel
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-10">
+    <div className="w-full max-w-4xl mx-auto mt-10">
 
       {/* ── DESKTOP ── */}
       <div className="hidden md:block relative">
-        {/* Slide 0 stays in normal flow → sets container height */}
-        {/* All slides sit on top of each other via absolute inset-0     */}
         <div className="relative w-full">
           {SLIDES.map((slide, i) => (
             <motion.div
@@ -61,7 +59,7 @@ export default function ReasyScreenCarousel({ accentColor }: ReasyScreenCarousel
           type="button"
           onClick={() => go((index - 1 + total) % total)}
           className="absolute top-1/2 left-3 md:left-5 z-20 -translate-y-1/2 p-2 md:p-3 text-white/90 hover:text-white transition-colors drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]"
-          aria-label="Previous"
+          aria-label="Previous screen"
         >
           <svg className="w-7 h-7 md:w-8 md:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -71,7 +69,7 @@ export default function ReasyScreenCarousel({ accentColor }: ReasyScreenCarousel
           type="button"
           onClick={() => go((index + 1) % total)}
           className="absolute top-1/2 right-3 md:right-5 z-20 -translate-y-1/2 p-2 md:p-3 text-white/90 hover:text-white transition-colors drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]"
-          aria-label="Next"
+          aria-label="Next screen"
         >
           <svg className="w-7 h-7 md:w-8 md:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
@@ -81,36 +79,64 @@ export default function ReasyScreenCarousel({ accentColor }: ReasyScreenCarousel
 
       {/* ── MOBILE: native snap scroll ── */}
       <div className="md:hidden">
-        <div
-          ref={mobileRef}
-          className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none"
-          style={{ WebkitOverflowScrolling: 'touch' }}
-          onScroll={handleMobileScroll}
-        >
-          {SLIDES.map((slide, i) => (
-            <div key={slide.src} className="flex-none w-full snap-center">
-              <IpadMockup className="w-full">
-                <img
-                  src={slide.src}
-                  alt={slide.label}
-                  className="w-full h-auto block"
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                />
-              </IpadMockup>
-            </div>
-          ))}
+        <div className="relative">
+          <div
+            ref={mobileRef}
+            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+            onScroll={handleMobileScroll}
+          >
+            {SLIDES.map((slide, i) => (
+              <div key={slide.src} className="flex-none w-full snap-center">
+                <IpadMockup className="w-full">
+                  <img
+                    src={slide.src}
+                    alt={slide.label}
+                    className="w-full h-auto block"
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                  />
+                </IpadMockup>
+              </div>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => go((index - 1 + total) % total)}
+            className="absolute top-1/2 left-1 -translate-y-1/2 z-20 p-2 rounded-full bg-black/30 backdrop-blur-sm text-white/90"
+            aria-label="Previous screen"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={() => go((index + 1) % total)}
+            className="absolute top-1/2 right-1 -translate-y-1/2 z-20 p-2 rounded-full bg-black/30 backdrop-blur-sm text-white/90"
+            aria-label="Next screen"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="flex items-center justify-between mt-3 px-1">
+          <span className="text-sm font-semibold text-foreground">{SLIDES[index].label}</span>
+          <span className="text-xs font-medium text-muted">{index + 1} / {total}</span>
         </div>
       </div>
 
       {/* Dots */}
       <div className="flex justify-center items-center gap-2.5 mt-6">
-        {SLIDES.map((s, i) => (
+        {SLIDES.map((slide, i) => (
           <button
-            key={s.src}
+            key={slide.src}
             type="button"
             onClick={() => go(i)}
-            className="p-1"
-            aria-label={`Go to ${s.label}`}
+            className="p-1 rounded-full"
+            aria-label={`Go to ${slide.label}`}
             aria-current={i === index ? 'true' : undefined}
           >
             <span

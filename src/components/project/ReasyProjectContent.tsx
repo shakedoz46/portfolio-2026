@@ -105,7 +105,16 @@ export default function ReasyProjectContent({ project }: ReasyProjectContentProp
         </p>
       </FadeIn>
 
-      <ReasyScreenCarousel accentColor={project.accentColor} />
+      <FadeIn className="py-12">
+        <IpadMockup className="w-full max-w-4xl">
+          <img
+            src="/Reasy/English version/Dashboard 1.jpg"
+            alt=""
+            className="w-full h-auto block"
+            loading="eager"
+          />
+        </IpadMockup>
+      </FadeIn>
 
       {problem?.body && (
         <FadeIn>
@@ -140,14 +149,9 @@ export default function ReasyProjectContent({ project }: ReasyProjectContentProp
         <Subheading>Full-Scale Admin Dashboard</Subheading>
         <BodyText>{ADMIN_INFRA}</BodyText>
         <BodyText>{ADMIN_DASHBOARD}</BodyText>
-        <IpadMockup className="mt-10">
-          <img
-            src="/Reasy/דשבורד כללי.png"
-            alt=""
-            className="w-full h-auto block"
-            loading="lazy"
-          />
-        </IpadMockup>
+        <div className="mt-10">
+          <ReasyScreenCarousel accentColor={project.accentColor} />
+        </div>
       </FadeIn>
 
       <FadeIn className="py-12">
@@ -190,7 +194,7 @@ export default function ReasyProjectContent({ project }: ReasyProjectContentProp
         <img
           src="/Reasy/app mockup.png"
           alt=""
-          className="w-full h-auto block rounded-2xl"
+          className="w-full h-auto block rounded-[24px] shadow-[0_4px_24px_rgba(0,0,0,0.08),0_1px_8px_rgba(0,0,0,0.04)]"
           loading="lazy"
         />
       </FadeIn>
