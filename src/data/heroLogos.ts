@@ -6,11 +6,6 @@ export const heroLogoCards = [
     label: 'Smeets',
   },
   {
-    slug: 'osis-hotel',
-    src: '/logos/Oasis Hotel.png',
-    label: 'Oasis Hotel',
-  },
-  {
     slug: 'reasy',
     src: '/logos/Reasy.png',
     label: 'Reasy',

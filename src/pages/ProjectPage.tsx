@@ -9,7 +9,6 @@ import SmeetsProjectContent from '../components/project/SmeetsProjectContent'
 import AbTestingProjectContent from '../components/project/AbTestingProjectContent'
 import MichaelProjectContent from '../components/project/MichaelProjectContent'
 import ReasyProjectContent from '../components/project/ReasyProjectContent'
-import OasisProjectContent from '../components/project/OasisProjectContent'
 
 export default function ProjectPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -38,8 +37,6 @@ export default function ProjectPage() {
           <MichaelProjectContent project={project} />
         ) : project.slug === 'reasy' ? (
           <ReasyProjectContent project={project} />
-        ) : project.slug === 'osis-hotel' ? (
-          <OasisProjectContent project={project} />
         ) : (
           <>
             {project.heroImage && (

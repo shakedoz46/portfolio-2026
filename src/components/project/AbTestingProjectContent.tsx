@@ -1,6 +1,5 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import BeforeAfterCompare from './BeforeAfterCompare'
 import IpadMockup from './IpadMockup'
 import ProjectStats from './ProjectStats'
 import type { Project } from '../../data/projects'
@@ -112,19 +111,14 @@ export default function AbTestingProjectContent({ project }: AbTestingProjectCon
       </FadeIn>
 
       <FadeIn className="py-12">
-        <div className="flex justify-between items-baseline mb-4 px-1 max-w-4xl mx-auto">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-muted">Before</span>
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-muted">After</span>
-        </div>
-        <IpadMockup>
-          <BeforeAfterCompare
-            beforeSrc="/AB testing/Old version.png"
-            afterSrc="/AB testing/Dashboard.png"
+        <IpadMockup className="w-full max-w-4xl">
+          <img
+            src="/AB testing/English version/Dashboard.jpg"
+            alt="AdVary Dashboard"
+            className="w-full h-auto block"
+            loading="eager"
           />
         </IpadMockup>
-        <p className="text-sm text-muted mt-5 max-w-4xl mx-auto">
-          Drag across the screen to compare. The divider stays where you leave it.
-        </p>
       </FadeIn>
 
       {challenge?.body && (
@@ -176,7 +170,7 @@ export default function AbTestingProjectContent({ project }: AbTestingProjectCon
           body={[
             'I redesigned the dashboard to make key performance metrics stand out and help users quickly see important insights. To make things easier, I added a "Recent Projects" section for quick access and included quick actions for common tasks. My aim was to keep the interface clean and welcoming, so users feel comfortable using it without feeling overloaded.',
           ]}
-          imageSrc="/AB testing/Dashboard.png"
+          imageSrc="/AB testing/English version/Dashboard.jpg"
         />
       </FadeIn>
 
@@ -187,24 +181,18 @@ export default function AbTestingProjectContent({ project }: AbTestingProjectCon
             'To help users make better creative choices, I built a side-by-side Split-View Layout for comparing original ads with AI variations. Each ad comes with an AI Analysis Overlay that explains the reason for each change, like headline tweaks or CTA contrast updates.',
             'The AI Analysis Overlay was designed to be fully editable. This lets users guide the results to match what the client wants and helps the agent understand the requirements correctly.',
           ]}
-          imageSrc="/AB testing/Variation page.png"
+          imageSrc="/AB testing/English version/Variation result.jpg"
         />
       </FadeIn>
 
-      <FadeIn className="py-12">
-        <IpadMockup className="mb-10">
-          <img
-            src="/AB testing/ניתוח קריאטיב.png"
-            alt=""
-            className="w-full h-auto block"
-            loading="lazy"
-          />
-        </IpadMockup>
-        <p className="text-base md:text-lg text-muted leading-[1.85]">
-          Together with the AI agent, we built an additional editable section so users can steer
-          outcomes to match client intent while ensuring the agent interprets requirements
-          correctly.
-        </p>
+      <FadeIn>
+        <FeatureBlock
+          title="Creative Analysis"
+          body={[
+            'Together with the AI agent, we built an additional editable section so users can steer outcomes to match client intent while ensuring the agent interprets requirements correctly.',
+          ]}
+          imageSrc="/AB testing/English version/creative analysis.jpg"
+        />
       </FadeIn>
 
       <FadeIn className="py-12">

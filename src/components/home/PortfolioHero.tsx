@@ -1,237 +1,147 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { heroLogoCards } from '../../data/heroLogos'
-import { projects } from '../../data/projects'
-import { cn } from '../../lib/cn'
+import SphereImageGrid, { type ImageData } from '../ui/SphereImageGrid'
 
-const easeOut = [0.22, 1, 0.36, 1] as [number, number, number, number]
+const ease = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.12 },
-  },
-}
-
-const titleVariants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: easeOut },
-  },
-}
-
-const descVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: easeOut },
-  },
-}
-
-/** Resting fan: slight tilt, left -> right z-order */
-const CARD_POSE = [
-  { rotate: -7, z: 1 },
-  { rotate: -3.5, z: 2 },
-  { rotate: 0, z: 3 },
-  { rotate: 3.5, z: 4 },
-  { rotate: 7, z: 5 },
-] as const
-
-const gridBackgroundStyle: React.CSSProperties = {
+const gridStyle: React.CSSProperties = {
   backgroundImage:
-    'linear-gradient(rgba(26,26,26,0.07) 1px, transparent 1px), linear-gradient(to right, rgba(26,26,26,0.07) 1px, transparent 1px)',
+    'linear-gradient(rgba(26,26,26,0.065) 1px, transparent 1px), linear-gradient(to right, rgba(26,26,26,0.065) 1px, transparent 1px)',
   backgroundSize: '3rem 3rem',
 }
 
-function HeroLogoCard({
-  card,
-  index,
-  hoveredSlug,
-  onHover,
-}: {
-  card: (typeof heroLogoCards)[number]
-  index: number
-  hoveredSlug: string | null
-  onHover: (slug: string | null) => void
-}) {
-  const pose = CARD_POSE[index]
-  const isHovered = hoveredSlug === card.slug
-  const isAnyHovered = hoveredSlug !== null
+// All tool logos from /logos/tools logos/
+const BASE_LOGOS: ImageData[] = [
+  { id: 'figma',      src: '/logos/tools logos/figma-svgrepo-com.svg',           alt: 'Figma',        title: 'Figma' },
+  { id: 'cursor',     src: '/logos/tools logos/cursor.svg',                       alt: 'Cursor',       title: 'Cursor' },
+  { id: 'claude',     src: '/logos/tools logos/claude-icon.svg',                  alt: 'Claude',       title: 'Claude' },
+  { id: 'illustrator',src: '/logos/tools logos/adobe-illustrator-svgrepo-com.svg',alt:'Illustrator',   title: 'Illustrator' },
+  { id: 'photoshop',  src: '/logos/tools logos/adobe-photoshop-svgrepo-com.svg',  alt: 'Photoshop',   title: 'Photoshop' },
+  { id: 'premiere',   src: '/logos/tools logos/adobe-premiere-svgrepo-com.svg',   alt: 'Premiere',    title: 'Premiere' },
+  { id: 'gemini',     src: '/logos/tools logos/gemini-color.svg',                 alt: 'Gemini',      title: 'Gemini' },
+  { id: 'github',     src: '/logos/tools logos/github-icon.svg',                  alt: 'GitHub',      title: 'GitHub' },
+  { id: 'playconsole',src: '/logos/tools logos/google-play-console-icon.svg',     alt: 'Play Console',title: 'Play Console' },
+  { id: 'grok',       src: '/logos/tools logos/grok-icon.svg',                    alt: 'Grok',        title: 'Grok' },
+  { id: 'lovable',    src: '/logos/tools logos/lovable-color.svg',                alt: 'Lovable',     title: 'Lovable' },
+  { id: 'midjourney', src: '/logos/tools logos/midjourney.svg',                   alt: 'Midjourney',  title: 'Midjourney' },
+  { id: 'miro',       src: '/logos/tools logos/miro-icon.svg',                    alt: 'Miro',        title: 'Miro' },
+  { id: 'openai',     src: '/logos/tools logos/openai-icon.svg',                  alt: 'OpenAI',      title: 'OpenAI' },
+  { id: 'perplexity', src: '/logos/tools logos/perplexity-icon.svg',              alt: 'Perplexity',  title: 'Perplexity' },
+  { id: 'supabase',   src: '/logos/tools logos/supabase-icon.svg',                alt: 'Supabase',    title: 'Supabase' },
+  { id: 'vercel',     src: '/logos/tools logos/vercel-icon.svg',                  alt: 'Vercel',      title: 'Vercel' },
+  { id: 'vscode',     src: '/logos/tools logos/visual-studio-code.svg',           alt: 'VS Code',     title: 'VS Code' },
+]
 
+// Triple so sphere is fully dense (54 total)
+const TOOL_LOGOS: ImageData[] = [
+  ...BASE_LOGOS,
+  ...BASE_LOGOS.map(l => ({ ...l, id: l.id + '_2' })),
+  ...BASE_LOGOS.map(l => ({ ...l, id: l.id + '_3' })),
+]
+
+export default function PortfolioHero() {
   return (
-    /* Outer wrapper: owns layout dimensions & z-index — NOT transformed */
-    <div
-      className="relative shrink-0 w-[clamp(88px,17vw,200px)] aspect-square first:ml-0 -ml-[clamp(14px,3.2vw,36px)]"
-      style={{ zIndex: isHovered ? 50 : pose.z }}
-    >
-      {/* Card: handles scale / lift / rotate — label is NOT inside here */}
-      <motion.div
-        className="absolute inset-0"
-        initial={{ opacity: 0, y: 36, scale: 0.9 }}
-        animate={{
-          opacity: 1,
-          y: isHovered ? -11 : 0,
-          scale: isHovered ? 1.1 : 1,
-          rotate: isHovered ? 0 : pose.rotate,
-        }}
-        transition={{ duration: 0.35, ease: easeOut, delay: index * 0.06 }}
-        onHoverStart={() => onHover(card.slug)}
-        onHoverEnd={() => onHover(null)}
-      >
-        <Link
-          to={`/project/${card.slug}`}
-          className={cn(
-            'block h-full w-full overflow-hidden rounded-2xl border border-foreground/10 bg-white shadow-[0_16px_40px_-10px_rgba(0,0,0,0.22)] transition-shadow',
-            isHovered && 'shadow-[0_24px_56px_-12px_rgba(0,0,0,0.28)]',
-            isAnyHovered && !isHovered && 'brightness-[0.97]'
-          )}
-          aria-label={`View ${card.label} case study`}
-        >
-          <img
-            src={card.src}
-            alt=""
-            className="h-full w-full object-cover"
-            loading={index >= 2 ? 'eager' : 'lazy'}
-          />
-        </Link>
-      </motion.div>
+    <section className="relative h-dvh overflow-hidden bg-background flex flex-col">
+      {/* Grid */}
+      <div className="pointer-events-none absolute inset-0" style={gridStyle} />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-background/30 to-background" />
 
-      {/* Label: inset-x-0 + flex justify-center → always centered on the card regardless of text width */}
-      <motion.span
-        className="pointer-events-none absolute inset-x-0 -bottom-7 z-20 flex justify-center whitespace-nowrap text-sm font-semibold text-foreground"
-        initial={false}
-        animate={{
-          opacity: isHovered ? 1 : 0,
-          y: isHovered ? 0 : -8,
-        }}
-        transition={{ duration: 0.22 }}
-        aria-hidden={!isHovered}
-      >
-        {card.label}
-      </motion.span>
-    </div>
-  )
-}
+      {/* Main row */}
+      <div className="relative z-10 flex flex-1 flex-row items-center">
 
-interface PortfolioHeroProps {
-  className?: string
-}
+        {/* ── Left: text ── */}
+        <div className="flex flex-col justify-center px-8 sm:px-12 md:px-20 lg:px-28 flex-1 min-w-0">
 
-export default function PortfolioHero({ className }: PortfolioHeroProps) {
-  const [hoveredSlug, setHoveredSlug] = useState<string | null>(null)
-  const hoveredProject = projects.find((project) => project.slug === hoveredSlug)
-  const dynamicAccent = hoveredProject?.accentColor ?? '#1A1A1A'
-
-  return (
-    <section
-      className={cn(
-        'relative bg-background text-foreground md:h-dvh md:overflow-hidden',
-        className
-      )}
-    >
-      <div className="absolute inset-0" style={gridBackgroundStyle} aria-hidden />
-      <div
-        className="absolute inset-0 bg-gradient-to-b from-background via-background/94 to-background"
-        aria-hidden
-      />
-
-      <motion.div
-        className="relative z-20 mx-auto flex md:h-full max-w-6xl flex-col items-center justify-center gap-10 md:gap-14 px-4 pt-20 pb-16 md:px-8 md:pt-24 md:pb-12"
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-      >
-        <motion.div
-          className="flex w-full flex-col items-center text-center"
-          variants={containerVariants}
-        >
-          <motion.h1
-            className="max-w-4xl text-4xl font-black tracking-tight md:text-5xl lg:text-6xl lg:leading-[1.05]"
-            variants={titleVariants}
+          {/* Overline */}
+          <motion.div
+            className="mb-7 flex items-center gap-3 md:mb-9"
+            initial={{ opacity: 0, x: -18 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.12, duration: 0.55, ease }}
           >
-            Your search for a Designer ends right here.
+            <div className="h-px w-6 bg-foreground/25" />
+            <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-foreground/45">
+              Product Designer · Based in Israel
+            </span>
+          </motion.div>
+
+          {/* Giant name */}
+          <motion.h1
+            className="font-black leading-[0.88] tracking-[-0.03em] text-foreground"
+            style={{ fontSize: 'clamp(56px, 8.5vw, 160px)' }}
+            initial={{ opacity: 0, y: 52 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.22, duration: 0.78, ease }}
+          >
+            Shaked
+            <br />
+            Oz.
           </motion.h1>
 
+          {/* Tagline */}
           <motion.p
-            className="mt-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/85"
-            variants={titleVariants}
+            className="mt-6 max-w-[440px] text-base leading-[1.7] text-foreground/55 md:mt-8 md:text-lg"
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.44, duration: 0.65, ease }}
           >
-            Hello, I&apos;m Shaked
-          </motion.p>
-
-          <motion.p
-            className="mt-5 max-w-4xl text-lg text-foreground md:text-xl"
-            variants={descVariants}
-          >
-            <span
-              className="font-medium transition-colors duration-300"
-              style={{ color: dynamicAccent }}
-            >
-              A Product Designer with young energy and battle-tested market experience.
+            Curious about design and constantly exploring new tools in the AI era.{' '}
+            <span className="font-semibold text-foreground">
+              Build digital products that ship, scale, and drive real results.
             </span>
-            <br />
-            I don&apos;t just design pixels, I build scalable systems and solve business problems.
           </motion.p>
-        </motion.div>
+        </div>
 
+        {/* ── Right: tool sphere (desktop only) ── */}
         <motion.div
-          className="flex w-full justify-center pb-8"
-          variants={descVariants}
+          className="hidden md:flex flex-shrink-0 items-center justify-center pr-8 lg:pr-16"
+          initial={{ opacity: 0, scale: 0.88 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.55, duration: 0.85, ease }}
         >
-          {/* Desktop: horizontal fan */}
-          <div className="hidden md:flex w-full max-w-[min(100%,1100px)] items-center justify-center px-1 sm:px-2">
-            {heroLogoCards.map((card, i) => (
-              <HeroLogoCard
-                key={card.slug}
-                card={card}
-                index={i}
-                hoveredSlug={hoveredSlug}
-                onHover={setHoveredSlug}
-              />
-            ))}
-          </div>
-
-          {/* Mobile: vertical list */}
-          <div className="md:hidden flex flex-col items-center gap-3 w-full px-4">
-            {heroLogoCards.map((card, i) => (
-              <motion.div
-                key={card.slug}
-                initial={{ opacity: 0, x: -24 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: i * 0.07 }}
-                className="w-full max-w-[340px]"
+          <SphereImageGrid
+            images={TOOL_LOGOS}
+            containerSize={600}
+            sphereRadius={245}
+            baseImageScale={0.095}
+            autoRotate
+            autoRotateSpeed={0.24}
+            dragSensitivity={0.5}
+            momentumDecay={0.94}
+            perspective={900}
+            centerContent={
+              <div
+                className="flex items-center justify-center rounded-2xl bg-white border border-black/8 shadow-[0_6px_24px_-2px_rgba(0,0,0,0.14)]"
+                style={{ width: 108, height: 108, padding: '15%' }}
               >
-                <Link
-                  to={`/project/${card.slug}`}
-                  className="group flex items-center gap-4 rounded-2xl border border-foreground/10 bg-white/60 p-3 shadow-sm backdrop-blur-sm overflow-hidden"
-                  aria-label={`View ${card.label} case study`}
-                >
-                  <div className="w-14 h-14 shrink-0 rounded-xl overflow-hidden border border-foreground/8 bg-white">
-                    <img src={card.src} alt="" className="w-full h-full object-cover" />
-                  </div>
-                  <span className="text-sm font-semibold text-foreground group-hover:text-foreground/70 transition-colors">
-                    {card.label}
-                  </span>
-                  <span className="ml-auto text-muted text-sm">→</span>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
+                <img
+                  src="/logos/tools logos/figma-svgrepo-com.svg"
+                  alt="Figma"
+                  className="w-full h-full object-contain"
+                  draggable={false}
+                />
+              </div>
+            }
+          />
         </motion.div>
+      </div>
 
-        <motion.p
-          className="max-w-xl text-center text-xs text-foreground/80 md:text-sm"
-          variants={descVariants}
+      {/* Scroll indicator */}
+      <motion.div
+        className="relative z-10 flex flex-col items-center gap-2 pb-9 md:pb-11"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.92, duration: 0.55 }}
+      >
+        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-foreground/30">
+          Selected Work
+        </span>
+        <motion.span
+          className="text-base text-foreground/25"
+          animate={{ y: [0, 7, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut', delay: 0.4 }}
         >
-          Selected case studies in product design, systems thinking,
-          <br />
-          and AI-powered experiences.
-        </motion.p>
+          ↓
+        </motion.span>
       </motion.div>
     </section>
   )

@@ -63,6 +63,35 @@ export const projects: Project[] = [
         ],
       },
     ],
+    nextProject: 'reasy',
+  },
+  {
+    slug: 'reasy',
+    tag: 'Strategic Product',
+    title: 'Reasy',
+    subtitle: 'Architecting Strategy for the Modern Rental Market',
+    year: '2025',
+    industry: 'Real Estate',
+    role: 'Product Manager / Designer',
+    client: 'Reasy',
+    accentColor: '#0088FF',
+    coverImage: '/Reasy/app mockup.png',
+    sections: [
+      {
+        sectionNumber: '01',
+        title: 'The Challenge: A Disconnected Rental Ecosystem',
+        body: [
+          'The rental market is often fragmented, with tenants, landlords, and brokers not always working together smoothly. Reasy aimed to bring everything into one place, but when I joined the team, the product still needed a clear way to match users and did not have tools for the business owner to manage the platform as it grew.',
+        ],
+      },
+      {
+        sectionNumber: '02',
+        title: 'The Solution: Strategic Matching & Operational Control',
+        body: [
+          'I took on the challenge of moving the product beyond just its look and feel. I created a matching algorithm that uses important user details to make better connections. At the same time, I built an Admin Dashboard from the ground up, giving the client their first tool to manage users, listings, and transactions as they happen.',
+        ],
+      },
+    ],
     nextProject: 'michael',
   },
   {
@@ -108,49 +137,6 @@ export const projects: Project[] = [
         ],
       },
     ],
-    nextProject: 'reasy',
-  },
-  {
-    slug: 'reasy',
-    tag: 'Strategic Product',
-    title: 'Reasy',
-    subtitle: 'Architecting Strategy for the Modern Rental Market',
-    year: '2025',
-    industry: 'Real Estate',
-    role: 'Product Manager / Designer',
-    client: 'Reasy',
-    accentColor: '#0088FF',
-    coverImage: '/Reasy/app mockup.png',
-    sections: [
-      {
-        sectionNumber: '01',
-        title: 'The Challenge: A Disconnected Rental Ecosystem',
-        body: [
-          'The rental market is often fragmented, with tenants, landlords, and brokers not always working together smoothly. Reasy aimed to bring everything into one place, but when I joined the team, the product still needed a clear way to match users and did not have tools for the business owner to manage the platform as it grew.',
-        ],
-      },
-      {
-        sectionNumber: '02',
-        title: 'The Solution: Strategic Matching & Operational Control',
-        body: [
-          'I took on the challenge of moving the product beyond just its look and feel. I created a matching algorithm that uses important user details to make better connections. At the same time, I built an Admin Dashboard from the ground up, giving the client their first tool to manage users, listings, and transactions as they happen.',
-        ],
-      },
-    ],
-    nextProject: 'osis-hotel',
-  },
-  {
-    slug: 'osis-hotel',
-    tag: 'Operational System',
-    title: 'Oasis Hotel',
-    subtitle: 'Smart management for modern hotel operations',
-    year: '2024',
-    industry: 'Hospitality / Operations',
-    role: 'UX/UI Designer',
-    client: 'Oasis hotel',
-    accentColor: '#3C82F5',
-    coverImage: '/Osis hotel/Dashboard.png',
-    sections: [],
     nextProject: 'smeets',
   },
   {

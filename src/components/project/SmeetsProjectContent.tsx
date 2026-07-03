@@ -57,10 +57,14 @@ function BareImage({
   return <img src={src} alt={alt} className={`block max-w-full h-auto ${className}`} loading="lazy" />
 }
 
-const PHONE_CLASS = 'w-[min(100%,168px)] sm:w-[180px] md:w-[200px] shrink-0'
+const PHONE_CLASS = 'w-[min(100%,200px)] sm:w-[220px] md:w-[260px] shrink-0'
 
 function PhoneMockup({ src, alt }: { src: string; alt: string }) {
-  return <BareImage src={src} alt={alt} className={PHONE_CLASS} />
+  return (
+    <div className={`${PHONE_CLASS} rounded-[24px] overflow-hidden`}>
+      <img src={src} alt={alt} className="w-full h-auto block" loading="lazy" />
+    </div>
+  )
 }
 
 function SectionText({
@@ -102,7 +106,7 @@ function SideBySide({
   wideGap?: boolean
   children: React.ReactNode
 }) {
-  const gapClass = wideGap ? 'md:gap-[88px]' : 'md:gap-10 lg:gap-14'
+  const gapClass = wideGap ? 'md:gap-[48px]' : 'md:gap-6 lg:gap-10'
 
   const textBlock = (
     <div className="flex-1 min-w-0 flex flex-col justify-center text-left w-full">
@@ -120,7 +124,7 @@ function SideBySide({
   const phoneBlock = (
     <div
       className={`shrink-0 flex items-center justify-center ${
-        twoPhones ? 'gap-[24px]' : ''
+        twoPhones ? 'gap-[14px]' : ''
       }`}
     >
       {children}
@@ -187,7 +191,7 @@ export default function SmeetsProjectContent({ project }: SmeetsProjectContentPr
           <BareImage
             src="/smeets/Me user persona.png"
             alt="Research persona"
-            className="w-full max-w-[140px] md:max-w-[160px] rounded-xl border border-foreground/15"
+            className="w-full max-w-[140px] md:max-w-[160px] rounded-[24px]"
           />
         </div>
 
@@ -284,7 +288,7 @@ export default function SmeetsProjectContent({ project }: SmeetsProjectContentPr
       </FadeIn>
 
       <FadeIn className="py-12">
-        <div className="flex justify-center items-center gap-[24px] mb-10 -ml-4">
+        <div className="flex justify-center items-center gap-[14px] mb-10 -ml-4">
           <PhoneMockup src="/smeets/profile.png" alt="Profile" />
           <PhoneMockup src="/smeets/team.png" alt="Team" />
         </div>
